@@ -15,6 +15,12 @@ const Create = props => {
     setUsers([...u]);
   };
 
+  useEffect(() => {
+    console.log(users);
+
+    loadUser();
+  }, [props.className]);
+
   const storeUser = () => {
     saveUser({
       id: getRandomArbitrary(0, 10000),
@@ -26,10 +32,6 @@ const Create = props => {
     props.setNewFriendScreen(false);
     loadUser();
   };
-
-  useEffect(() => {
-    loadUser();
-  }, [props.className]);
 
   return (
     <div className={props.className}>

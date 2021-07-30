@@ -77,16 +77,16 @@ describe('deleteUser', () => {
 
   it('calls localstorage setitem', () => {
     const setItem = jest.spyOn(window.localStorage.__proto__, 'setItem');
-    deleteUser(mockUser);
+    deleteUser(1234);
     expect(setItem).toHaveBeenCalledWith('users', JSON.stringify([]));
   });
 
   it('returns true', () => {
-    expect(deleteUser(mockUser)).toEqual(true);
+    expect(deleteUser(1234)).toEqual(true);
   });
 
   it('returns user not found if user is not foud', () => {
-    const user = { id: 213123, name: 'pippo', friends: [] };
-    expect(deleteUser(user)).toEqual('user not found');
+    const id = 1234456;
+    expect(deleteUser(id)).toEqual('user not found');
   });
 });

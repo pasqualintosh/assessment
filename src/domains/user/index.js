@@ -24,11 +24,11 @@ export function editUser(user) {
   } else return 'user not found';
 }
 
-export function deleteUser(user) {
+export function deleteUser(id) {
   let users = window.localStorage.getItem('users')
     ? JSON.parse(window.localStorage.getItem('users'))
     : [];
-  let found = users.findIndex(e => e.id === user.id);
+  let found = users.findIndex(e => e.id == id);
 
   if (found !== -1) {
     users.splice(found, 1);

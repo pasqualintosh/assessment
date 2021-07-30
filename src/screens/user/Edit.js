@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from './../../components/Header/Header';
 import UserForm from '../../components/UserForm/UserForm';
 import FriendsList from '../../components/FriendsList/FriendsList';
-import { saveUser } from './../../domains/user/index';
+import { saveUser, deleteUser } from './../../domains/user/index';
 import { getRandomArbitrary } from '../../helpers/getRandomArbitrary';
 
 const Edit = props => {
@@ -12,7 +12,14 @@ const Edit = props => {
   const [users, setUsers] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
 
-  const storeUser = () => {};
+  const storeUser = () => {
+    deleteUser(id);
+    saveUser({
+      id: getRandomArbitrary(0, 10000),
+      name,
+      friends: [...selectedFriends],
+    });
+  };
 
   useEffect(() => {
     const loadUser = () => {
@@ -22,18 +29,15 @@ const Edit = props => {
         u.findIndex(e => e.id == id),
         1,
       );
-      let f = _u.find(e => e.id == id).friends;
-      setName(_u.find(e => e.id == id).name);
-      setSelectedFriends([
-        ...f.map(e => ({
-          id: e,
-        })),
-      ]);
+
+      let i = _u.find(e => e.id == id);
+      setName(i.name);
+      setSelectedFriends([...i.friends]);
       setUsers([...u]);
     };
 
     loadUser();
-  }, [selectedFriends.length]);
+  }, []);
 
   return (
     <div className={props.className}>

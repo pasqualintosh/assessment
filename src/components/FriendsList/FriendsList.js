@@ -4,32 +4,22 @@ import './friends-list.css';
 const FriendsList = props => {
   const [clickedFriends, setClickedFriends] = useState([]);
 
-  useEffect(() => {
-    const loadClicked = () => {
-      let c = [...props.selectedFriends];
-      setClickedFriends([...c]);
-    };
-
-    loadClicked();
-  }, []);
+  useEffect(() => {}, [props.selectedFriends]);
 
   const isClicked = id => {
-    let found = clickedFriends.find(f => f.id == id);
-    if (found) return true;
-    return false;
+    return props.selectedFriends.includes(id);
   };
 
   const removeClicked = id => {
-    let found = clickedFriends.findIndex(f => f.id == id);
-    if (found != -1) {
-      let _clickedFriends = [...clickedFriends.filter(f => f.id !== id)];
-      setClickedFriends([..._clickedFriends]);
-    }
+    let friends = [...props.selectedFriends];
+    let index = friends.findIndex(e => e == id);
+    friends.splice(index, 1);
+    props.selectFriend([...friends]);
   };
 
   const setFriends = f => {
-    setClickedFriends([...clickedFriends, f]);
-    props.selectFriend([...clickedFriends, f].map(f => f.id));
+    let friends = props.selectedFriends;
+    props.selectFriend([...friends, f]);
   };
 
   const openNewFriend = () => {
@@ -59,8 +49,8 @@ const FriendsList = props => {
       {props.users.map(u => (
         <li key={u.id}>
           <span
-            onClick={() => setFriends(u)}
-            className={isClicked(u.id) ? 'clicked' : ''}>
+            className={isClicked(u.id) ? 'clicked' : ''}
+            onClick={() => setFriends(u.id)}>
             {u.name}
           </span>
           <SelectFriendButton
