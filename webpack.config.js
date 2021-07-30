@@ -16,10 +16,24 @@ module.exports = {
     historyApiFallback: true,
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json', '.css'],
   },
   module: {
     rules: [
+      {
+        test: /\.(css|css)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'style-loader',
+        },
+      },
+      {
+        test: /\.(css|css)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'css-loader',
+        },
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
