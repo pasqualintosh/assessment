@@ -29,7 +29,7 @@ const FriendsList = props => {
 
   const setFriends = f => {
     setClickedFriends([...clickedFriends, f]);
-    props.selectFriend(clickedFriends.map(f => f.id));
+    props.selectFriend([...clickedFriends, f].map(f => f.id));
   };
 
   const openNewFriend = () => {

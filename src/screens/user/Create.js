@@ -29,7 +29,7 @@ const Create = props => {
 
   useEffect(() => {
     loadUser();
-  }, [props.className, selectedFriends.length]);
+  }, [props.className]);
 
   return (
     <div className={props.className}>
