@@ -3,34 +3,47 @@ import Header from './../../components/Header/Header';
 import UserForm from '../../components/UserForm/UserForm';
 import { saveUser } from './../../domains/user/index';
 import { getRandomArbitrary } from '../../helpers/getRandomArbitrary';
-import UsersList from '../../components/UsersList/UsersList';
+import FriendsList from '../../components/FriendsList/FriendsList';
+import './create.css';
 
-const Create = () => {
+const Create = props => {
   const [name, setName] = useState('');
   const [users, setUsers] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedFriends, setSelectedFriends] = useState([]);
+  const loadUser = () => {
+    let u = JSON.parse(window.localStorage.getItem('users')) || [];
+    setUsers([...u]);
+  };
+
+  const storeUser = () => {
+    saveUser({
+      id: getRandomArbitrary(0, 10000),
+      name,
+      friends: [...selectedFriends],
+    });
+    setName('');
+    setSelectedFriends([]);
+    props.setNewFriendScreen(false);
+    loadUser();
+  };
 
   useEffect(() => {
-    const loadUser = () => {
-      let u = JSON.parse(window.localStorage.getItem('users')) || [];
-      setUsers([...u]);
-    };
-
     loadUser();
-  }, []);
+  }, [props.className, selectedFriends.length]);
 
   return (
-    <div>
+    <div className={props.className}>
       <Header headerText={'Users'}>
-        <button
-          onClick={() => {
-            saveUser({ id: getRandomArbitrary(0, 10000), name, friends: [] });
-          }}>
-          Save
-        </button>
+        <button onClick={() => storeUser()}>Save</button>
       </Header>
-      <UserForm onChange={setName} />
-      <UsersList users={[...users]} selectedUsers={[...users]} />
+      <UserForm className={props.className} onChange={setName} name={name} />
+      <FriendsList
+        users={[...users]}
+        selectedFriends={[...selectedFriends]}
+        selectFriend={setSelectedFriends}
+        setNewFriendScreen={props.setNewFriendScreen}
+        newFriendScreen={props.newFriendScreen}
+      />
     </div>
   );
 };

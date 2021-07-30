@@ -1,0 +1,15 @@
+.overlayCreate {
+  position: absolute;
+  top: 8px;
+  left: 7vw;
+  background: #fff;
+  width: 93vw;
+}
+
+.underlayCreate {
+  background: #33333380;
+}
+
+.underlayCreate * {
+  opacity: 0.6;
+}
