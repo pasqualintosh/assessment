@@ -7,27 +7,32 @@ const mockUser = { id: 1234, name: 'pasquale', friends: [] };
 describe('saveUser', () => {
   beforeEach(() => {
     window.localStorage.__proto__.setItem = jest.fn();
-    window.localStorage.__proto__.getItem = jest.fn().mockReturnValue([]);
+    window.localStorage.__proto__.getItem = jest
+      .fn()
+      .mockReturnValue(JSON.stringify([]));
   });
 
   afterEach(cleanup);
 
   it('calls localstorage setitem', () => {
     const setItem = jest.spyOn(window.localStorage.__proto__, 'setItem');
-    const user = { id: '1234', name: 'pippo', friends: [] };
+    const user = { id: 1234, name: 'pippo', friends: [] };
     saveUser(user);
     expect(setItem).toHaveBeenCalledWith('users', JSON.stringify([user]));
   });
 
   it('return true', () => {
     const setItem = jest.spyOn(window.localStorage.__proto__, 'setItem');
-    const user = { id: '1234', name: 'pippo', friends: [] };
+    const user = { id: 1234, name: 'pippo', friends: [] };
     expect(saveUser(user)).toEqual(true);
   });
 
   it('return user already existing if user.name is duplicated', () => {
     const setItem = jest.spyOn(window.localStorage.__proto__, 'setItem');
-    saveUser(mockUser);
+    window.localStorage.__proto__.getItem = jest
+      .fn()
+      .mockReturnValue(JSON.stringify([mockUser]));
+
     expect(saveUser(mockUser)).toEqual('user already existing');
   });
 });
@@ -37,7 +42,7 @@ describe('editUser', () => {
     window.localStorage.__proto__.setItem = jest.fn();
     window.localStorage.__proto__.getItem = jest
       .fn()
-      .mockReturnValue([mockUser]);
+      .mockReturnValue(JSON.stringify([mockUser]));
   });
 
   afterEach(cleanup);
@@ -65,7 +70,7 @@ describe('deleteUser', () => {
     window.localStorage.__proto__.setItem = jest.fn();
     window.localStorage.__proto__.getItem = jest
       .fn()
-      .mockReturnValue([mockUser]);
+      .mockReturnValue(JSON.stringify([mockUser]));
   });
 
   afterEach(cleanup);

@@ -1,5 +1,7 @@
 export function saveUser(user) {
-  let users = window.localStorage.getItem('users') || [];
+  let users = window.localStorage.getItem('users')
+    ? JSON.parse(window.localStorage.getItem('users'))
+    : [];
   let found = users.find(e => e.name == user.name);
 
   if (!found) {
@@ -10,7 +12,9 @@ export function saveUser(user) {
 }
 
 export function editUser(user) {
-  let users = window.localStorage.getItem('users') || [];
+  let users = window.localStorage.getItem('users')
+    ? JSON.parse(window.localStorage.getItem('users'))
+    : [];
   let found = users.findIndex(e => e.id === user.id);
 
   if (found !== -1) {
@@ -21,7 +25,9 @@ export function editUser(user) {
 }
 
 export function deleteUser(user) {
-  let users = window.localStorage.getItem('users') || [];
+  let users = window.localStorage.getItem('users')
+    ? JSON.parse(window.localStorage.getItem('users'))
+    : [];
   let found = users.findIndex(e => e.id === user.id);
 
   if (found !== -1) {
