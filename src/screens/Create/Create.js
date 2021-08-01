@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Header from './../../components/Header/Header';
+import Header from '../../components/Header/Header';
 import UserForm from '../../components/UserForm/UserForm';
-import { saveUser } from './../../domains/user/index';
+import { saveUser, deleteUser } from '../../domains/user/index';
 import { getRandomArbitrary } from '../../helpers/getRandomArbitrary';
 import FriendsList from '../../components/FriendsList/FriendsList';
 import './create.css';
+import { useParams } from 'react-router-dom';
 
 const Create = props => {
+  let { id } = useParams();
   const [name, setName] = useState('');
   const [users, setUsers] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
@@ -16,10 +18,33 @@ const Create = props => {
   };
 
   useEffect(() => {
-    console.log(users);
+    if (id && !props.newFriendScreen) {
+      const fetchUser = () => {
+        let u = JSON.parse(window.localStorage.getItem('users')) || [];
+        let _u = [...u];
+        u.splice(
+          u.findIndex(e => e.id == id),
+          1,
+        );
 
-    loadUser();
-  }, [props.className]);
+        let i = _u.find(e => e.id == id);
+        setName(i.name);
+        setSelectedFriends([...i.friends]);
+        setUsers([...u]);
+      };
+
+      fetchUser();
+    } else loadUser();
+  }, [props.className, props.setNewFriendScreen]);
+
+  const updateUser = () => {
+    deleteUser(id);
+    saveUser({
+      id: getRandomArbitrary(0, 10000),
+      name,
+      friends: [...selectedFriends],
+    });
+  };
 
   const storeUser = () => {
     saveUser({
@@ -33,10 +58,15 @@ const Create = props => {
     loadUser();
   };
 
+  const storeOrUpdate = () => {
+    if (id && !props.newFriendScreen) updateUser();
+    else storeUser();
+  };
+
   return (
     <div className={props.className}>
       <Header headerText={'Users'}>
-        <button onClick={() => storeUser()}>Save</button>
+        <button onClick={() => storeOrUpdate()}>Save</button>
       </Header>
       <UserForm className={props.className} onChange={setName} name={name} />
       <FriendsList

@@ -7,9 +7,9 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import Create from './screens/user/Create';
-import Edit from './screens/user/Edit';
-import Read from './screens/user/Read';
+import Create from './screens/Create/Create';
+import Edit from './screens/Edit/Edit';
+import Read from './screens/Read/Read';
 
 const App = () => {
   const [newFriendScreen, setNewFriendScreen] = useState(false);
@@ -32,6 +32,7 @@ const App = () => {
           <Create
             className={newFriendScreen ? 'underlayCreate' : ''}
             setNewFriendScreen={setNewFriendScreen}
+            newFriendScreen={newFriendScreen}
           />
           {newFriendScreen && (
             <Create
@@ -41,7 +42,15 @@ const App = () => {
             />
           )}
         </Route>
-        <Route path="/user/:id" children={<Edit />} />
+        <Route
+          path="/user/:id"
+          children={
+            <Edit
+              setNewFriendScreen={setNewFriendScreen}
+              newFriendScreen={newFriendScreen}
+            />
+          }
+        />
         <Route path="/">
           <Read />
         </Route>
