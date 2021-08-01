@@ -37,7 +37,7 @@ const FriendsList = props => {
   };
 
   return (
-    <div>
+    <div className="friends-list">
       <h1>Friends</h1>
       <div>
         <button

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../components/Header/Header';
-import UserForm from '../../components/UserForm/UserForm';
+import Header from '../Header/Header';
+import UserForm from '../UserForm/UserForm';
 import { saveUser, deleteUser } from '../../domains/user/index';
 import { getRandomArbitrary } from '../../helpers/getRandomArbitrary';
-import FriendsList from '../../components/FriendsList/FriendsList';
+import FriendsList from '../FriendsList/FriendsList';
 import './create.css';
 import { useParams } from 'react-router-dom';
 

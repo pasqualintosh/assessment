@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 
 const Read = () => {
@@ -18,12 +17,12 @@ const Read = () => {
     <div>
       <Header headerText={'Users'}>
         <button>
-          <Link to={`/users/create`}>New</Link>
+          <a href={`/users/create`}>New</a>
         </button>
       </Header>
       {users.map(u => (
         <li key={u.id}>
-          <Link to={`/user/${u.id}`}>{u.name}</Link>
+          <a href={`/user/${u.id}`}>{u.name}</a>
         </li>
       ))}
     </div>

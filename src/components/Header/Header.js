@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './header.css';
 
 const Header = props => {
@@ -7,7 +6,7 @@ const Header = props => {
     <div className="header">
       {props.headerText && (
         <h1>
-          <Link to="/">{props.headerText}</Link>
+          <a href="/">{props.headerText}</a>
         </h1>
       )}
       {props.children}

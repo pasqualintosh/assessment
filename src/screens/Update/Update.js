@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Create from './../Create/Create';
+import Create from './../../components/Create/Create';
 
 const Edit = props => {
   useEffect(() => {}, [props.newFriendScreen]);
